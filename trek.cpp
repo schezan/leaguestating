@@ -32,18 +32,15 @@ vector<float> baseKsanteStats_lvl(float lvl){
 
 
 vector<float>spells_stats_e(int points,float bonus_hp,float haste){
-	float mult=1.15;
-	float t_cd=(haste/(100+haste));
-	vector<float> sheild_str={mult*bonus_hp*80,mult*bonus_hp*120,mult*bonus_hp*160,mult*bonus_hp*200,mult*bonus_hp*240};
-	vector<float> cd1={10,9.5,9,8.5,8};
-	vector<float> cd;
-	for (float cdr:cd1){
-		cd.push_back(t_cd*cdr);
-	}
-	int ind=points-1;
+	float mult=0.15;
+	float t_cd=(haste/(100.0+haste));
+	vector<float> bases={80.0,120.0,160.0,200.0,240.0};
+	vector<float> cd1={10.0,9.5,9.0,8.5,8.0};
+	
+	
 	vector <float> v;
-	v.push_back(sheild_str[ind]);
-	v.push_back(cd[ind]);
+	v.push_back(bases[points-1]+(bonus_hp*mult));
+	v.push_back(cd1[points-1]-(t_cd*cd1[points-1]));
 	return v;
 	
 	
@@ -120,12 +117,18 @@ int main(){
 	
 	
 	//point,opponent_hp, bonus_armor,bonus_mr,ap haste
-	vector<float> ans=spells_stats_w(5,1800.0,150.0,12.0,22.0);
-	cout<<"W dmg :"<<ans[0]<<endl;
-	cout<<"W cd :"<<ans[1]<<endl;
+	// vector<float> ans=spells_stats_w(5,1800.0,150.0,12.0,22.0);
+	// cout<<"W dmg :"<<ans[0]<<endl;
+	// cout<<"W cd :"<<ans[1]<<endl;
 	//ksanteStats_lvl(13.0)=hp,mana,dmg,armr,mr,ap,total_as;
 	//print_staTs(ksante_staTs[0],ksante_staTs[1],ksante_staTs[2],ksante_staTs[3],ksante_staTs[4],ksante_staTs[5],ksante_staTs[6]);
 	
+	//points,bonus_hp,aphaste
+    vector<float> ans=spells_stats_e(2,650.0,22.0);
+	cout<<"E sheild:"<<ans[0]<<endl;
+	cout<<"E cd :"<<ans[1]<<endl;
+	
+
 	
 	return 0;
 }
